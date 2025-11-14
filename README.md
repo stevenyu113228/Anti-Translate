@@ -2,6 +2,10 @@
 
 一個輕量級的 JavaScript Library，用於偵測和防止網頁被瀏覽器翻譯功能誤譯。
 
+## 示範畫面
+
+![Demo](img/demo.png)
+
 ## 功能特色
 
 - 🔍 **智能偵測** - 自動偵測網頁是否被 Google Chrome、Firefox 等瀏覽器翻譯
