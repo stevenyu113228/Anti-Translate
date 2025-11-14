@@ -46,12 +46,6 @@
 
 ## 安裝
 
-### 使用 npm
-
-```bash
-npm install anti-translate
-```
-
 ### 直接引入
 
 ```html
@@ -61,7 +55,7 @@ npm install anti-translate
 ### ES6 Module
 
 ```javascript
-import AntiTranslate from 'anti-translate';
+import AntiTranslate from './src/index.js';
 ```
 
 ## 快速開始
@@ -243,7 +237,7 @@ AntiTranslate.init({
 
 ```javascript
 import { useEffect } from 'react';
-import AntiTranslate from 'anti-translate';
+import AntiTranslate from './src/index.js';
 
 function App() {
   useEffect(() => {
