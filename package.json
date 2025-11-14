@@ -1,0 +1,42 @@
+{
+  "name": "anti-translate",
+  "version": "1.0.0",
+  "description": "A JavaScript library to detect and prevent webpage translation",
+  "main": "dist/anti-translate.min.js",
+  "module": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "serve": "python3 -m http.server 8080",
+    "test": "echo \"No tests specified yet\" && exit 0"
+  },
+  "keywords": [
+    "translation",
+    "anti-translate",
+    "detect-translation",
+    "prevent-translation",
+    "browser-translation",
+    "google-translate"
+  ],
+  "author": "Steven",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.9.0"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/anti-translate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/anti-translate/issues"
+  },
+  "homepage": "https://github.com/yourusername/anti-translate#readme"
+}

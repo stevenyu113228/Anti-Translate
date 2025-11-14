@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anti-Translate Demo - Translation Prevention Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    header {
+      background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%);
+      color: white;
+      padding: 40px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 40px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      color: #ff6a88;
+      margin-bottom: 15px;
+      font-size: 24px;
+    }
+
+    .section p {
+      margin-bottom: 10px;
+      line-height: 1.8;
+    }
+
+    .control-panel {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    .control-panel h3 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: #ff9a56;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #ff8142;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 154, 86, 0.4);
+    }
+
+    .btn-success {
+      background: #28a745;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+    }
+
+    .btn-danger {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #c82333;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+    }
+
+    .btn-info {
+      background: #17a2b8;
+      color: white;
+    }
+
+    .btn-info:hover {
+      background: #138496;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(23, 162, 184, 0.4);
+    }
+
+    .status-box {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      border-left: 4px solid #ff9a56;
+    }
+
+    .status-box h4 {
+      margin-bottom: 10px;
+      color: #ff9a56;
+    }
+
+    .status-item {
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .status-item:last-child {
+      border-bottom: none;
+    }
+
+    .status-value {
+      font-weight: 600;
+      color: #28a745;
+    }
+
+    .status-value.error {
+      color: #dc3545;
+    }
+
+    .code-block {
+      background: #282c34;
+      color: #abb2bf;
+      padding: 20px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+
+    .code-block code {
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .feature-card {
+      background: #fff9f5;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #ff9a56;
+    }
+
+    .feature-card h3 {
+      color: #ff6a88;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .dynamic-content {
+      min-height: 100px;
+      padding: 20px;
+      background: #fff3cd;
+      border-radius: 5px;
+      margin-top: 15px;
+    }
+
+    footer {
+      background: #f8f9fa;
+      padding: 20px;
+      text-align: center;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🐱 Anti-Translate 🐱</h1>
+      <p>😺 JavaScript Library Demo Page for Preventing Web Translation 😺</p>
+    </header>
+
+    <div class="content">
+      <div class="control-panel">
+        <h3>Control Panel</h3>
+        <div class="button-group">
+          <button class="btn-primary" onclick="initDetectMode()">Enable Detect Mode</button>
+          <button class="btn-success" onclick="initPreventMode()">Enable Prevent Mode</button>
+          <button class="btn-info" onclick="checkStatus()">Check Translation Status</button>
+          <button class="btn-danger" onclick="stopWatch()">Stop Monitoring</button>
+          <button class="btn-primary" onclick="manualRevert()">Manual Revert</button>
+          <button class="btn-info" onclick="addDynamicContent()">Add Dynamic Content</button>
+        </div>
+
+        <div class="status-box">
+          <h4>System Status</h4>
+          <div class="status-item">
+            Monitoring Status: <span id="watchStatus" class="status-value">Not Started</span>
+          </div>
+          <div class="status-item">
+            Translation Status: <span id="translateStatus" class="status-value">Not Translated</span>
+          </div>
+          <div class="status-item">
+            Mode: <span id="modeStatus" class="status-value">-</span>
+          </div>
+          <div class="status-item">
+            Event Log: <span id="eventLog" class="status-value">None</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>📖 About Anti-Translate 🐈</h2>
+        <p>
+          Anti-Translate is a lightweight JavaScript Library designed to detect and prevent web pages from being mistranslated by browser translation features.
+          Many technical documents, proper nouns, or domain-specific content can become difficult to understand after translation - this library provides a solution.
+        </p>
+        <p>
+          This page demonstrates the various features of Anti-Translate. You can try using Google Chrome's translation feature to translate this page
+          and observe how Anti-Translate detects and handles the translation behavior.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>✨ Key Features 😸</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h3>🔍 Smart Detection 😼</h3>
+            <p>Automatically detects whether the page has been translated by browsers like Google Chrome, Firefox, etc.</p>
+          </div>
+          <div class="feature-card">
+            <h3>⚠️ Real-time Warning 😾</h3>
+            <p>Immediately displays a warning popup to alert users when translation is detected</p>
+          </div>
+          <div class="feature-card">
+            <h3>🔄 Auto Revert 😻</h3>
+            <p>Option to automatically revert translated content back to the original language</p>
+          </div>
+          <div class="feature-card">
+            <h3>⚡ Dynamic Support 🙀</h3>
+            <p>Supports dynamically generated content from Ajax, React, Vue, etc.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>🚀 Quick Start</h2>
+        <p>Import the library and initialize:</p>
+        <div class="code-block">
+          <code>// Detect mode - warning only, no revert
+AntiTranslate.init({
+  mode: 'detect',
+  showWarning: true,
+  warningMessage: 'Translation detected. Please note content accuracy.'
+});
+
+// Prevent mode - auto revert
+AntiTranslate.init({
+  mode: 'prevent',
+  autoRevert: true
+});</code>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>🧪 Test Content</h2>
+        <p>Below is some test content. Try translating this page to test Anti-Translate functionality:</p>
+        <ul style="margin-left: 20px; margin-top: 10px;">
+          <li>This is English test text</li>
+          <li>JavaScript is a programming language</li>
+          <li>Anti-Translate Library prevents translation</li>
+          <li>MutationObserver API monitors DOM changes</li>
+        </ul>
+
+        <div class="dynamic-content" id="dynamicContent">
+          <strong>Dynamic Content Area</strong>
+          <p>Content in this area can be added dynamically to test support for dynamic content.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>📝 Usage Instructions</h2>
+        <ol style="margin-left: 20px; line-height: 2;">
+          <li>Click "Enable Detect Mode" or "Enable Prevent Mode" to start Anti-Translate</li>
+          <li>Use your browser's translation feature to translate this page (Chrome: Right-click → Translate to...)</li>
+          <li>Observe how Anti-Translate detects and handles the translation behavior</li>
+          <li>In detect mode, a warning popup will appear</li>
+          <li>In prevent mode, translated content will be automatically reverted</li>
+        </ol>
+      </div>
+    </div>
+
+    <footer>
+      <p>🐾 &copy; 2025 Anti-Translate Library | Open Source Project 🐾</p>
+    </footer>
+  </div>
+
+  <!-- Import Anti-Translate Library -->
+  <script type="module">
+    // Using ES6 modules, need to use import
+    // In production, should import the bundled file
+    import AntiTranslate from '../src/index.js';
+
+    // Mount AntiTranslate to window for other scripts to use
+    window.AntiTranslate = AntiTranslate;
+
+    // Show success message
+    console.log('Anti-Translate loaded successfully');
+  </script>
+
+  <script>
+    // Detect mode
+    function initDetectMode() {
+      AntiTranslate.init({
+        mode: 'detect',
+        showWarning: true,
+        warningMessage: '⚠️ Translation detected. Please note content accuracy.',
+        autoRevert: false,
+        onDetected: (results) => {
+          updateStatus('Monitoring', 'Translated', 'Detect Mode', 'Translation detected!');
+          console.log('Translation detected:', results);
+        },
+        onReverted: () => {
+          updateStatus('Monitoring', 'Not Translated', 'Detect Mode', 'Translation reverted');
+        }
+      });
+      updateStatus('Monitoring', 'Not Translated', 'Detect Mode', 'Detect mode enabled');
+      alert('Detect mode enabled! Please try translating this page.');
+    }
+
+    // Prevent mode
+    function initPreventMode() {
+      AntiTranslate.init({
+        mode: 'prevent',
+        showWarning: true,
+        autoRevert: true,
+        warningMessage: '🛡️ Translation detected and automatically reverted.',
+        onDetected: (results) => {
+          updateStatus('Monitoring', 'Reverted', 'Prevent Mode', 'Auto-reverted translation');
+          console.log('Translation prevented:', results);
+        }
+      });
+      updateStatus('Monitoring', 'Not Translated', 'Prevent Mode', 'Prevent mode enabled');
+      alert('Prevent mode enabled! Page will automatically prevent translation.');
+    }
+
+    // Check status
+    function checkStatus() {
+      const isTranslated = AntiTranslate.checkTranslation();
+      const status = isTranslated ? 'Translated' : 'Not Translated';
+      updateStatus(null, status, null, `Status check: ${status}`);
+      alert(`Current translation status: ${status}`);
+    }
+
+    // Stop monitoring
+    function stopWatch() {
+      AntiTranslate.stopWatch();
+      updateStatus('Stopped', null, null, 'Monitoring stopped');
+      alert('Translation monitoring stopped');
+    }
+
+    // Manual revert
+    function manualRevert() {
+      AntiTranslate.revert();
+      updateStatus(null, 'Reverted', null, 'Manual revert executed');
+      alert('Translation manually reverted');
+    }
+
+    // Add dynamic content
+    let dynamicCounter = 0;
+    function addDynamicContent() {
+      dynamicCounter++;
+      const container = document.getElementById('dynamicContent');
+      const newElement = document.createElement('p');
+      newElement.textContent = `Dynamically added content #${dynamicCounter} - This is dynamically added content`;
+      newElement.style.padding = '10px';
+      newElement.style.background = 'white';
+      newElement.style.marginTop = '10px';
+      newElement.style.borderRadius = '5px';
+      container.appendChild(newElement);
+      updateStatus(null, null, null, `Added dynamic content #${dynamicCounter}`);
+    }
+
+    // Update status display
+    function updateStatus(watchStatus, translateStatus, mode, event) {
+      if (watchStatus) {
+        document.getElementById('watchStatus').textContent = watchStatus;
+      }
+      if (translateStatus) {
+        const elem = document.getElementById('translateStatus');
+        elem.textContent = translateStatus;
+        elem.className = translateStatus.includes('Translated') ? 'status-value error' : 'status-value';
+      }
+      if (mode) {
+        document.getElementById('modeStatus').textContent = mode;
+      }
+      if (event) {
+        const now = new Date().toLocaleTimeString();
+        document.getElementById('eventLog').textContent = `${now} - ${event}`;
+      }
+    }
+  </script>
+</body>
+</html>
